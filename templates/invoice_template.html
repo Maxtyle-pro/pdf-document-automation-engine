@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice {{ invoice_id }}</title>
+    <style>
+        body {
+            margin: 32px;
+            color: #222;
+            font-size: 14px;
+        }
+
+        h1, h2, p {
+            margin: 0 0 12px;
+        }
+
+        .meta {
+            margin-bottom: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        th, td {
+            border: 1px solid #d0d0d0;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Чек / Invoice #{{ invoice_id }}</h1>
+
+    <div class="meta">
+        <p><strong>Дата генерации:</strong> {{ generated_at.strftime("%Y-%m-%d %H:%M") }}</p>
+        <p><strong>Клиент:</strong> {{ invoice.get("customer_name") or invoice.get("customer") or invoice.get("client_name") or "-" }}</p>
+        <p><strong>Email:</strong> {{ invoice.get("email") or "-" }}</p>
+        <p><strong>Телефон:</strong> {{ invoice.get("phone") or "-" }}</p>
+        <p><strong>Сумма:</strong> {{ invoice.get("total") or invoice.get("amount") or "-" }}</p>
+    </div>
+
+    <h2>Позиции</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Описание</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Итого</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.get("description") or item.get("item") or item.get("name") or "-" }}</td>
+                <td>{{ item.get("quantity") or item.get("qty") or "-" }}</td>
+                <td>{{ item.get("price") or item.get("unit_price") or "-" }}</td>
+                <td>{{ item.get("line_total") or item.get("total") or "-" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

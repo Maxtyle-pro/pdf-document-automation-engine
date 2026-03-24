@@ -1,0 +1,44 @@
+[
+  {
+    "invoice_id": "JSON-2001",
+    "customer_name": "Анна Кузнецова",
+    "email": "anna.kuznetsova@example.com",
+    "phone": "+7-903-111-22-33",
+    "total": "26000",
+    "items": [
+      {
+        "description": "Дизайн презентации",
+        "quantity": 1,
+        "price": 18000,
+        "line_total": 18000
+      },
+      {
+        "description": "Подготовка иллюстраций",
+        "quantity": 2,
+        "price": 4000,
+        "line_total": 8000
+      }
+    ]
+  },
+  {
+    "invoice_id": "JSON-2002",
+    "customer_name": "ООО Бета",
+    "email": "sales@beta.example",
+    "phone": "+7-812-222-33-44",
+    "total": "92000",
+    "items": [
+      {
+        "description": "Лицензия на ПО",
+        "quantity": 4,
+        "price": 20000,
+        "line_total": 80000
+      },
+      {
+        "description": "Внедрение",
+        "quantity": 1,
+        "price": 12000,
+        "line_total": 12000
+      }
+    ]
+  }
+]

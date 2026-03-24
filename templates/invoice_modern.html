@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Современный Invoice {{ invoice_id }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 24mm 16mm 20mm;
+        }
+
+        body {
+            margin: 0;
+            color: #1f2937;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .header {
+            margin-bottom: 24px;
+            padding: 20px 24px;
+            background: #0f172a;
+            color: #ffffff;
+            border-radius: 14px;
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .grid {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .grid td {
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px 0 0;
+        }
+
+        .card {
+            padding: 16px 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .card-title {
+            margin: 0 0 10px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #64748b;
+        }
+
+        .row {
+            margin: 0 0 6px;
+        }
+
+        .label {
+            display: inline-block;
+            min-width: 110px;
+            color: #64748b;
+        }
+
+        table.items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        table.items thead th {
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 12px;
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        table.items tbody td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #ffffff;
+        }
+
+        table.items tbody tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .summary {
+            margin-top: 18px;
+            text-align: right;
+        }
+
+        .total-box {
+            display: inline-block;
+            min-width: 220px;
+            padding: 14px 18px;
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #166534;
+        }
+
+        .footer {
+            margin-top: 28px;
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Invoice {{ invoice_id }}</h1>
+        <p>Документ сформирован {{ generated_at.strftime("%d.%m.%Y %H:%M") }}</p>
+    </div>
+
+    <table class="grid">
+        <tr>
+            <td>
+                <div class="card">
+                    <p class="card-title">Клиент</p>
+                    <p class="row"><span class="label">Имя:</span> {{ invoice.get("customer_name") or invoice.get("customer") or invoice.get("client_name") or "-" }}</p>
+                    <p class="row"><span class="label">Email:</span> {{ invoice.get("email") or "-" }}</p>
+                    <p class="row"><span class="label">Телефон:</span> {{ invoice.get("phone") or "-" }}</p>
+                </div>
+            </td>
+            <td>
+                <div class="card">
+                    <p class="card-title">Информация</p>
+                    <p class="row"><span class="label">Номер:</span> {{ invoice_id }}</p>
+                    <p class="row"><span class="label">Позиций:</span> {{ items|length }}</p>
+                    <p class="row"><span class="label">Итого:</span> {{ invoice.get("total") or invoice.get("amount") or "-" }}</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Наименование</th>
+                <th>Кол-во</th>
+                <th>Цена</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.get("description") or item.get("item") or item.get("name") or "-" }}</td>
+                <td>{{ item.get("quantity") or item.get("qty") or "-" }}</td>
+                <td>{{ item.get("price") or item.get("unit_price") or "-" }}</td>
+                <td>{{ item.get("line_total") or item.get("total") or "-" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <div class="total-box">
+            Итого: {{ invoice.get("total") or invoice.get("amount") or "-" }}
+        </div>
+    </div>
+
+    <div class="footer">
+        PDF создан автоматически из HTML-шаблона через WeasyPrint
+    </div>
+</body>
+</html>

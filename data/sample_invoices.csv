@@ -1,0 +1,7 @@
+invoice_id,customer_name,email,phone,description,quantity,price,line_total,total
+INV-1001,Иван Петров,ivan.petrov@example.com,+7-999-123-45-67,Ноутбук,1,75000,75000,78000
+INV-1001,Иван Петров,ivan.petrov@example.com,+7-999-123-45-67,Мышь беспроводная,1,3000,3000,78000
+INV-1002,ООО Альфа,info@alpha.example,+7-495-555-10-10,Разработка сайта,1,120000,120000,138000
+INV-1002,ООО Альфа,info@alpha.example,+7-495-555-10-10,Техническая поддержка,1,18000,18000,138000
+INV-1003,Мария Смирнова,maria.smirnova@example.com,+7-921-888-77-66,Консультация,2,5000,10000,14500
+INV-1003,Мария Смирнова,maria.smirnova@example.com,+7-921-888-77-66,Подготовка документов,1,4500,4500,14500
